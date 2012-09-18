@@ -48,14 +48,12 @@ $folder = new Folder();
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">
+		<h3><?php echo $folder->name == '' ? Config::get('sitename') : $folder->name ?></h3>
 		<div class="pull-left">
-			<p class="pull-left">
-				<h3><?php echo $folder->name == '' ? Config::get('sitename') : $folder->name ?></h3>
-				<p><?php echo $folder->count; ?> objects in this folder, <?php echo Folder::format($folder->size) ?> total.</p>
-			</p>
-			<?php if($folder->current) { ?><i class="icon-chevron-left"></i> &nbsp;<a href="<?php echo $folder->getUpUrl() ?>">Back</a><?php } ?>
+			<p><?php echo $folder->count; ?> objects in this folder, <?php echo Folder::format($folder->size) ?> total.</p>
+			<?php if($folder->current) { ?><p><i class="icon-chevron-left"></i> &nbsp;<a href="<?php echo $folder->getUpUrl() ?>">Back</a></p><?php } ?>
 		</div>
-		<div class="pull-right" style="padding-top:50px">
+		<div class="pull-right">
 			<div class="input-prepend input-append">
 				Search: <input type="text" name="search" id="search">
 				<button class="btn" type="button" id="btn-search"><i class="icon-search"></i></button>
