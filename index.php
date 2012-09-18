@@ -17,7 +17,7 @@ $folder = new Folder();
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/stupidtable.min.js"></script>
-<script type="text/javascript" src="js/core.js"></script>
+<script type="text/javascript" src="js/core.min.js"></script>
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">
