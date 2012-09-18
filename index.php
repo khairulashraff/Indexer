@@ -16,6 +16,7 @@ $folder = new Folder();
 <script type="text/javascript" src="js/search.min.js"></script>
 <style>
 	#idx th.sortable, #image-preview img {cursor:pointer;}
+	#idx tr.folder td {background-color:#FAF9D2;}
 </style>
 
 <script>
@@ -69,8 +70,8 @@ $folder = new Folder();
 			</thead>
 			<tbody>
 				<?php foreach($folder->getDirs() AS $dir) { ?>
-					<tr>
-						<td data-order-by="<?php echo strtolower($dir['name']) ?>"><i class="icon-folder-close"></i> &nbsp;<a href="<?php echo $dir['url'] ?>"><?php echo $dir['name'] ?></a></td>
+					<tr class="folder">
+						<td class="name" data-order-by="<?php echo strtolower($dir['name']) ?>"><i class="icon-folder-close"></i> &nbsp;<a href="<?php echo $dir['url'] ?>"><?php echo $dir['name'] ?></a></td>
 						<td class="span3"></td>
 						<td class="span3" data-order-by="<?php echo $dir['date'] ?>"><?php echo date(Config::get('date'), $dir['date']) ?></td>
 					</tr>
@@ -78,7 +79,7 @@ $folder = new Folder();
 				
 				<?php foreach($folder->getFiles() AS $file) { ?>
 				<tr>
-					<td data-order-by="<?php echo strtolower($file['name']) ?>"><i class="icon-file"></i> &nbsp;<a href="<?php echo $file['url'] ?>"><?php echo $file['name'] ?></a></td>
+					<td class="name" data-order-by="<?php echo strtolower($file['name']) ?>"><i class="icon-file"></i> &nbsp;<a href="<?php echo $file['url'] ?>"><?php echo $file['name'] ?></a></td>
 					<td class="span3" style="width:50px;" data-order-by="<?php echo $file['size'] ?>"><?php echo Folder::format($file['size']) ?></td>
 					<td class="span3" data-order-by="<?php echo $file['date'] ?>"><?php echo date(Config::get('date'), $file['date']) ?></td>
 				</tr>
