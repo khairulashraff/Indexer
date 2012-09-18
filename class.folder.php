@@ -107,10 +107,11 @@ class Folder {
 			{
 				$size = filesize($path.$f);
 				$this->files[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
-																'name'=>$f,
-																'size'=>$size,
-																'date'=>filemtime($path.$f),
-																'url'=>trim("$dir/".rawurlencode($f),'/')
+																'name'	=>$f,
+																'size'	=>$size,
+																'date'	=>filemtime($path.$f),
+																'url'	=>trim("$dir/".rawurlencode($f),'/'),
+																'icon'	=> $this->getIcon($f)
 															);
 				$this->size += $size;
 			}
@@ -155,6 +156,25 @@ class Folder {
 		$url = ($this->up_dir != '' && $this->up_dir != '.') ? 'index.php?dir=' . rawurlencode($this->up_dir) : 'index.php';
 		
 		return $url;
+	}
+	
+	/*
+	 * Get icon for file
+	 * 
+	 * @access  public
+	 * @param  $string  Filename
+	 * @return  String  Icon class according to FontAwesome, without icon- prefix
+	 */
+	private function getIcon($f) {
+		$icons = Config::get('icons');
+		$ext = substr($f, strrpos($f, '.')+1, 3);
+		
+		if(isset($icons[$ext]))
+		{
+			return $icons[$ext];
+		}
+		
+		return 'file';
 	}
 	
 	/*

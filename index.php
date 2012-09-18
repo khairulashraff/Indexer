@@ -9,6 +9,9 @@ $folder = new Folder();
 <title><?php echo Config::get('sitename') ?></title>
 
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome-ie7.css">
+
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -79,7 +82,7 @@ $folder = new Folder();
 				
 				<?php foreach($folder->getFiles() AS $file) { ?>
 				<tr>
-					<td class="name" data-order-by="<?php echo strtolower($file['name']) ?>"><i class="icon-file"></i> &nbsp;<a href="<?php echo $file['url'] ?>"><?php echo $file['name'] ?></a></td>
+					<td class="name" data-order-by="<?php echo strtolower($file['name']) ?>"><i class="icon-<?php echo $file['icon'] ?>"></i> &nbsp;<a href="<?php echo $file['url'] ?>"><?php echo $file['name'] ?></a></td>
 					<td class="span3" style="width:50px;" data-order-by="<?php echo $file['size'] ?>"><?php echo Folder::format($file['size']) ?></td>
 					<td class="span3" data-order-by="<?php echo $file['date'] ?>"><?php echo date(Config::get('date'), $file['date']) ?></td>
 				</tr>
