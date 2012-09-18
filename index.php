@@ -16,39 +16,11 @@ $folder = new Folder();
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/stupidtable.min.js"></script>
-<script type="text/javascript" src="js/search.min.js"></script>
+<script type="text/javascript" src="js/core.min.js"></script>
 <style>
 	#idx th.sortable, #image-preview img {cursor:pointer;}
 	#idx tr.folder td {background-color:#FAF9D2;}
 </style>
-
-<script>
-	$(document).ready(function() {
-		var modal = $('#image-preview');
-		
-		$('a').filter(function(){ return /(jpe?g|png|gif)$/i.test($(this).attr('href')); }).click(function(e) {
-			e.preventDefault();
-			modal.modal();
-			var imgSrc = $(this).attr('href');
-			var imgNode = '<img src="'+ imgSrc +'" title="Click to close" rel="tooltip">';
-			modal.html(imgNode);
-			modal.css({'margin' : 0});
-			
-			var img = new Image();
-			img.onload = function() {
-				var left = $(window).width()/2 - this.width/2;
-				var top = $(window).height()/2 - this.height/2;
-				modal.css({'width' : this.width, 'left' : left, 'top': top});
-				$('img', modal).tooltip()
-			}
-			img.src = imgSrc;
-		});
-		
-		$(document).on('click','#image-preview img', function(e) {
-			modal.modal('hide');
-		});
-	});
-</script>
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">
