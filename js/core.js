@@ -15,7 +15,6 @@
 					if(e.which == 13) 
 					{
 						var str = $(this).val();
-
 						if(str == '')
 						{
 							self.reset();
@@ -27,23 +26,25 @@
 					}
 				});
 
-				$('#btn-search').click(function() {
-					if(self.searchInput.val() != '') {
-						self.reset();
-					}
+				$('#btn-reset').click(function() {
+					self.reset();
 				});
 
 				self.table.stupidtable();
 			},
 			search: function(str) {
-				$('tbody tr', this.table).hide();
-				$('tbody td:first-child:icontains('+str+')', this.table).parent().show();
-				$('#btn-search i').removeClass().addClass('icon-repeat');
+				if($('input[name=search-subfolder]').is(':checked') == true) {
+					window.location.href = 'index.php?search=' + str;
+				}
+				else {
+					$('tbody tr', this.table).hide();
+					$('tbody td:first-child:icontains('+str+')', this.table).parent().show();
+					$('#btn-search i').removeClass().addClass('icon-repeat');
+				}
 			},
 			reset: function() {
 				var self = this;
 				$('tbody tr', self.table).show();
-				$('#btn-search i').removeClass().addClass('icon-search');
 				self.searchInput.val('');
 			}
 		};
@@ -56,7 +57,6 @@
 			init: function() {
 				self = this;
 				self.modal = $('#image-preview');
-				console.log(1)
 
 				$('a').filter(function(){ return /(jpe?g|png|gif)$/i.test($(this).attr('href')); }).click(function(e) {
 					e.preventDefault();

@@ -17,7 +17,7 @@ $folder = new Folder();
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/stupidtable.min.js"></script>
-<script type="text/javascript" src="js/core.min.js"></script>
+<script type="text/javascript" src="js/core.js"></script>
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">
@@ -27,10 +27,15 @@ $folder = new Folder();
 			<?php if($folder->current) { ?><p><i class="icon-chevron-left"></i> &nbsp;<a href="<?php echo $folder->getUpUrl() ?>">Back</a></p><?php } ?>
 		</div>
 		<div class="pull-right">
-			<div class="input-prepend input-append">
-				Search: <input type="text" name="search" id="search">
-				<button class="btn" type="button" id="btn-search"><i class="icon-search"></i></button>
-			</div>
+				<div class="input-prepend input-append">
+					<div>
+						Search: <input type="text" name="search" id="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : '' ?>">
+						<button class="btn" type="button" id="btn-reset"><i class="icon-repeat"></i></button>
+					</div>
+					<label class="checkbox">
+						<input type="checkbox" name="search-subfolder"> Search subfolder
+					</label>
+				</div>
 		</div>
 		<table class='table table-striped' id="idx">
 			<thead>
