@@ -11,16 +11,13 @@ $folder = new Folder();
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome-ie7.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/stupidtable.min.js"></script>
 <script type="text/javascript" src="js/core.min.js"></script>
-<style>
-	#idx th.sortable, #image-preview img {cursor:pointer;}
-	#idx tr.folder td {background-color:#FAF9D2;}
-</style>
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">

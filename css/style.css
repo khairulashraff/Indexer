@@ -1,0 +1,6 @@
+#idx th.sortable, #image-preview img {
+	cursor:pointer;
+}
+#idx tr.folder td {
+	background-color:#FAF9D2;
+}
