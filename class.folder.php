@@ -1,4 +1,7 @@
 <?php
+
+include_once(dirname(__FILE__) . '/class.config.php');
+
 class Folder {
 	
 	/*
@@ -63,11 +66,13 @@ class Folder {
 	 * @return  void
 	 */
 	public function __construct() {
+		// load configs
+		Config::load();
+		
 		$self 		= basename(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __FILE__);
-		$ignore		= array('.','..','.htaccess','index.php','icon.php','class.folder.php','error.log','customerror.log','Thumbs.db',$self,'css','img','js'); // ignore these files
-
-		$root		= dirname(__FILE__);
+		$root		= Config::get('root');
 		$dir		= isset($_GET['dir']) ? $_GET['dir'] : '';
+		$ignore		= Config::get('ignore');
 		if(strstr($dir,'..'))
 		{	
 			$dir='';
@@ -84,11 +89,12 @@ class Folder {
 		$this->size = 0;
 		while(false!==($f=readdir($h)))
 		{
-			if(in_array($f,$ignore))
+			// exclude all ignored files/folders and folder starts with dot '.'
+			if(in_array($f,$ignore) || substr($f,0,1) == '.')
 			{
 				continue;
 			}
-
+			
 			if(is_dir($path.$f))
 			{
 				$this->dirs[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(

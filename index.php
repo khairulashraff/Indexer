@@ -1,16 +1,12 @@
-<?php
-$sitename	= 'Indexer';
-$date		= 'j M Y'; // date format
-
+<?php // START PHP
 include_once(dirname(__FILE__) . '/class.folder.php');
 $folder = new Folder();
-
 // END PHP ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
-<title><?php echo $sitename ?></title>
+<title><?php echo Config::get('sitename') ?></title>
 
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
@@ -54,7 +50,7 @@ $folder = new Folder();
 	<div class="container" style="padding-top: 30px;">
 		<div class="pull-left">
 			<p class="pull-left">
-				<h3><?php echo $folder->name == '' ? $sitename : $folder->name ?></h3>
+				<h3><?php echo $folder->name == '' ? Config::get('sitename') : $folder->name ?></h3>
 				<p><?php echo $folder->count; ?> objects in this folder, <?php echo Folder::format($folder->size) ?> total.</p>
 			</p>
 			<?php if($folder->current) { ?><i class="icon-chevron-left"></i> &nbsp;<a href="<?php echo $folder->getUpUrl() ?>">Back</a><?php } ?>
@@ -78,7 +74,7 @@ $folder = new Folder();
 					<tr>
 						<td data-order-by="<?php echo strtolower($dir['name']) ?>"><i class="icon-folder-close"></i> &nbsp;<a href="<?php echo $dir['url'] ?>"><?php echo $dir['name'] ?></a></td>
 						<td class="span3"></td>
-						<td class="span3" data-order-by="<?php echo $dir['date'] ?>"><?php echo date($date, $dir['date']) ?></td>
+						<td class="span3" data-order-by="<?php echo $dir['date'] ?>"><?php echo date(Config::get('date'), $dir['date']) ?></td>
 					</tr>
 				<?php } ?>
 				
@@ -86,7 +82,7 @@ $folder = new Folder();
 				<tr>
 					<td data-order-by="<?php echo strtolower($file['name']) ?>"><i class="icon-file"></i> &nbsp;<a href="<?php echo $file['url'] ?>"><?php echo $file['name'] ?></a></td>
 					<td class="span3" style="width:50px;" data-order-by="<?php echo $file['size'] ?>"><?php echo Folder::format($file['size']) ?></td>
-					<td class="span3" data-order-by="<?php echo $file['date'] ?>"><?php echo date($date, $file['date']) ?></td>
+					<td class="span3" data-order-by="<?php echo $file['date'] ?>"><?php echo date(Config::get('date'), $file['date']) ?></td>
 				</tr>
 				<?php } ?>
 			</tbody>
