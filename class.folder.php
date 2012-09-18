@@ -91,7 +91,7 @@ class Folder {
 
 			if(is_dir($path.$f))
 			{
-				$this->dirs[] = array(
+				$this->dirs[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
 							'name'=>$f,
 							'date'=>filemtime($path.$f),
 							'url'=>$self.'?dir='.rawurlencode(trim("$dir/$f",'/'))
@@ -100,7 +100,7 @@ class Folder {
 			else
 			{
 				$size = filesize($path.$f);
-				$this->files[preg_replace('/[.,_!-\s]/','', $f)] = array(
+				$this->files[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
 																'name'=>$f,
 																'size'=>$size,
 																'date'=>filemtime($path.$f),
@@ -109,6 +109,7 @@ class Folder {
 				$this->size += $size;
 			}
 		}
+		ksort($this->dirs);
 		ksort($this->files);
 		closedir($h);
 		
