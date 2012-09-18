@@ -1,5 +1,5 @@
 <?php
-$sitename	= 'temp';
+$sitename	= 'Indexer';
 $date		= 'j M Y'; // date format
 
 include_once(dirname(__FILE__) . '/class.folder.php');
