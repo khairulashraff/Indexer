@@ -73,6 +73,8 @@ class Folder {
 		$root		= Config::get('root');
 		$dir		= isset($_GET['dir']) ? $_GET['dir'] : '';
 		$ignore		= Config::get('ignore');
+		$search		= isset($_GET['search']) ? $_GET['search'] : false;
+		
 		if(strstr($dir,'..'))
 		{	
 			$dir='';
@@ -92,6 +94,11 @@ class Folder {
 			// exclude all ignored files/folders and folder starts with dot '.'
 			if(in_array($f,$ignore) || substr($f,0,1) == '.')
 			{
+				continue;
+			}
+			
+			// exclude any file not in search if searching
+			if($search && strpos(strtolower($f), $search) === false) {
 				continue;
 			}
 			
