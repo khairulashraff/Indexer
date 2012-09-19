@@ -44,7 +44,6 @@
 				else {
 					$('tbody tr', this.table).hide();
 					$('tbody td:first-child:icontains('+str+')', this.table).parent().show();
-					$('#btn-search i').removeClass().addClass('icon-repeat');
 					this.highlight(str);
 				}
 			},
