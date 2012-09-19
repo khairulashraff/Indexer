@@ -50,6 +50,10 @@
 				
 				self.searchInput.focus();
 				self.table.stupidtable();
+				
+				if(self.searchInput.val() != "") {
+					this.highlight(self.searchInput.val())
+				}
 			},
 			search: function(str) {
 				if($('input[name=deep]').is(':checked') == true) {
