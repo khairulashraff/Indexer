@@ -57,7 +57,9 @@
 			},
 			search: function(str) {
 				if($('input[name=deep]').is(':checked') == true) {
-					window.location.href = baseurl + 'index.php?search=' + str + '&deep=1';
+					var qs = $.querystring();
+					var dir = qs.dir == 'undefined' ? '' : '&dir=' + qs.dir;
+					window.location.href = baseurl + 'index.php?search=' + str + '&deep=1' + dir;
 				}
 				else {
 					$('tbody tr', this.table).hide();

@@ -19,6 +19,7 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 </script>
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
+<script type="text/javascript" src="js/jquery-querystring.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/stupidtable.min.js"></script>
 <script type="text/javascript" src="js/core.js"></script>
