@@ -75,6 +75,9 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 				<?php } ?>
 			</tbody>
 		</table>
+		<div id="footer">
+			&copy; Created by <a href="http://codeshare.my" target="_blank">Khairul Ashraff</a>. You are free to use this in any away without attribution.
+		</div>
 	</div>
 	<div class="modal hide fade" id="image-preview">a</div>
 </body>

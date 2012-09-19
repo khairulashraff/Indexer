@@ -13,3 +13,7 @@
 #idx tbody td span.highlight {
 	color: #b40000;
 }
+div#footer {
+	font-size: 70%;
+	text-align: center;
+}
