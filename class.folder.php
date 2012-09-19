@@ -101,7 +101,7 @@ class Folder {
 		$dir	= isset($_GET['dir']) ? $_GET['dir'] : '';
 		$search	= isset($_GET['search']) ? $_GET['search'] : false;
 		$deep	= isset($_GET['deep']) ? (boolean) $_GET['deep'] : false;
-		$path	= trim($root . '/' . $openDir, '/') . '/';
+		$path	= rtrim($root . '/' . $openDir, '/') . '/';
 		
 		if(!is_dir($path) || ($h=opendir($path)) == false)
 		{
@@ -116,11 +116,6 @@ class Folder {
 			{
 				continue;
 			}
-			
-			// exclude any file not in search if searching
-//			if($search && strpos(strtolower($f), $search) === false) {
-//				continue;
-//			}
 			
 			if(is_dir($path . $f))
 			{
