@@ -14,6 +14,9 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 <link rel="stylesheet" type="text/css" href="css/font-awesome-ie7.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
+<script type="text/javascript">
+	var baseurl = '<?php echo Config::get('baseurl') ?>';
+</script>
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>

@@ -57,7 +57,7 @@
 			},
 			search: function(str) {
 				if($('input[name=deep]').is(':checked') == true) {
-					window.location.href = 'index.php?search=' + str + '&deep=1';
+					window.location.href = baseurl + 'index.php?search=' + str + '&deep=1';
 				}
 				else {
 					$('tbody tr', this.table).hide();
@@ -67,7 +67,7 @@
 			},
 			reset: function() {
 				if(window.location.search != '') {
-					window.location.href = '/';
+					window.location.href = baseurl;
 				}
 				else {
 					var self = this;
