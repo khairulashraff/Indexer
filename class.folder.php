@@ -69,23 +69,43 @@ class Folder {
 		// load configs
 		Config::load();
 		
-		$self 		= basename(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __FILE__);
 		$root		= Config::get('root');
 		$dir		= isset($_GET['dir']) ? $_GET['dir'] : '';
-		$ignore		= Config::get('ignore');
-		$search		= isset($_GET['search']) ? $_GET['search'] : false;
 		
 		if(strstr($dir,'..'))
 		{	
 			$dir='';
 		}
 
-		$path		= "$root/$dir/";
-		$dirs		= $files =array();
-
+		$path			= "$root/$dir/";
+		$folder			= $this->openDir($dir);
+		$this->dirs		= $folder['dirs'];
+		$this->files	= $folder['files'];
+		
+		$this->name 	= basename($path);
+		$this->current	= $dir;
+		$this->up_dir	= dirname($dir);
+	}
+	
+	/*
+	 * Open and traverse into a directory
+	 * 
+	 * @access  public
+	 * @param  String  $path  Absolute folder path
+	 * @return  Array  Array of files and folders
+	 */
+	private function openDir($openDir) {
+		$dirs	= $files = array();
+		$ignore	= Config::get('ignore');
+		$root	= Config::get('root');
+		$dir	= isset($_GET['dir']) ? $_GET['dir'] : '';
+		$search	= isset($_GET['search']) ? $_GET['search'] : false;
+		$deep	= isset($_GET['deep']) ? (boolean) $_GET['deep'] : false;
+		$path	= trim($root . '/' . $openDir, '/') . '/';
+		
 		if(!is_dir($path) || ($h=opendir($path)) == false)
 		{
-			exit('Directory does not exist.');
+			return array('files' => array(), 'dirs' => array());
 		}
 
 		$this->size = 0;
@@ -98,39 +118,61 @@ class Folder {
 			}
 			
 			// exclude any file not in search if searching
-			if($search && strpos(strtolower($f), $search) === false) {
-				continue;
-			}
+//			if($search && strpos(strtolower($f), $search) === false) {
+//				continue;
+//			}
 			
-			if(is_dir($path.$f))
+			if(is_dir($path . $f))
 			{
-				$this->dirs[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
-							'name'=>$f,
-							'date'=>filemtime($path.$f),
-							'url'=>$self.'?dir='.rawurlencode(trim("$dir/$f",'/'))
+				$dirs[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
+							'name'	=>$f,
+							'date'	=>filemtime($path . $f),
+							'url'	=>'index.php?dir='.rawurlencode(trim($openDir . '/' . $f,'/')),
+							'path'	=> $openDir
 						);
+				
+				if($deep == true) {
+					$folder	= $this->openDir($openDir . '/' . $f);
+					$dirs	+= $folder['dirs'];
+					$files	+= $folder['files'];
+				}
 			}
 			else
 			{
-				$size = filesize($path.$f);
-				$this->files[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
-																'name'	=>$f,
-																'size'	=>$size,
-																'date'	=>filemtime($path.$f),
-																'url'	=>trim("$dir/".rawurlencode($f),'/'),
-																'icon'	=> $this->getIcon($f)
+				$size = filesize($path . $f);
+				$files[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
+																'name'	=> $f,
+																'size'	=> $size,
+																'date'	=> filemtime($path . $f),
+																'url'	=> trim($openDir . "/" . rawurlencode($f), '/'),
+																'icon'	=> $this->getIcon($f),
+																'path'	=> $openDir
 															);
 				$this->size += $size;
 			}
 		}
-		ksort($this->dirs);
-		ksort($this->files);
+		
+		if($search) {
+			$searchFunc = function($file) {
+								$search	= isset($_GET['search']) ? strtolower($_GET['search']) : false;
+								if(strpos(strtolower($file['name']), $search) === false) {
+									return false;
+								}
+								return true;
+							};
+			
+			$files = array_filter($files, $searchFunc);
+			$dirs = array_filter($dirs, $searchFunc);
+		}
+			
+		$this->count = count($files) + count($dirs);
+		
+		
+		ksort($dirs);
+		ksort($files);
 		closedir($h);
 		
-		$this->name 	= basename($path);
-		$this->current	= $dir;
-		$this->up_dir	= dirname($dir);		
-		$this->count	= count($this->files) + count($this->dirs);
+		return array('dirs' => $dirs, 'files' => $files);
 	}
 	
 	/*

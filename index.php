@@ -1,6 +1,7 @@
 <?php // START PHP
 include_once(dirname(__FILE__) . '/class.folder.php');
 $folder = new Folder();
+$deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 // END PHP ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -17,7 +18,7 @@ $folder = new Folder();
 <script type="text/javascript" src="js/jquery-icontains.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/stupidtable.min.js"></script>
-<script type="text/javascript" src="js/core.min.js"></script>
+<script type="text/javascript" src="js/core.js"></script>
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">
@@ -30,10 +31,11 @@ $folder = new Folder();
 				<div class="input-prepend input-append">
 					<div>
 						Search: <input type="text" name="search" id="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : '' ?>">
-						<button class="btn" type="button" id="btn-reset"><i class="icon-repeat"></i></button>
+						<button class="btn" type="button" id="btn-search" title="Search"><i class="icon-search"></i></button>
+						<button class="btn" type="button" id="btn-reset" title="Reset"><i class="icon-repeat"></i></button>
 					</div>
 					<label class="checkbox">
-						<input type="checkbox" name="search-subfolder"> Search subfolder
+						<input type="checkbox" name="deep"<?php if($deep != false) echo ' checked="checked"' ?>> Search subfolder
 					</label>
 				</div>
 		</div>
@@ -48,7 +50,10 @@ $folder = new Folder();
 			<tbody>
 				<?php foreach($folder->getDirs() AS $dir) { ?>
 					<tr class="folder">
-						<td class="name" data-order-by="<?php echo strtolower($dir['name']) ?>"><i class="icon-folder-close"></i> &nbsp;<a href="<?php echo $dir['url'] ?>"><?php echo $dir['name'] ?></a></td>
+						<td class="name" data-order-by="<?php echo strtolower($dir['name']) ?>">
+							<i class="icon-folder-close"></i> &nbsp;<a href="<?php echo $dir['url'] ?>"><?php echo $dir['name'] ?></a>
+							<?php if($deep != false) { ?><div class="path"><?php echo trim($dir['path'], '/') ?></div><?php } ?>
+						</td>
 						<td class="span3"></td>
 						<td class="span3" data-order-by="<?php echo $dir['date'] ?>"><?php echo date(Config::get('date'), $dir['date']) ?></td>
 					</tr>
@@ -56,7 +61,10 @@ $folder = new Folder();
 				
 				<?php foreach($folder->getFiles() AS $file) { ?>
 				<tr>
-					<td class="name" data-order-by="<?php echo strtolower($file['name']) ?>"><i class="icon-<?php echo $file['icon'] ?>"></i> &nbsp;<a href="<?php echo $file['url'] ?>"><?php echo $file['name'] ?></a></td>
+					<td class="name" data-order-by="<?php echo strtolower($file['name']) ?>">
+						<i class="icon-<?php echo $file['icon'] ?>"></i> &nbsp;<a href="<?php echo $file['url'] ?>"><?php echo $file['name'] ?></a>
+						<?php if($deep != false) { ?><div class="path"><?php echo trim($file['path'], '/') ?></div><?php } ?>
+					</td>
 					<td class="span3" style="width:50px;" data-order-by="<?php echo $file['size'] ?>"><?php echo Folder::format($file['size']) ?></td>
 					<td class="span3" data-order-by="<?php echo $file['date'] ?>"><?php echo date(Config::get('date'), $file['date']) ?></td>
 				</tr>

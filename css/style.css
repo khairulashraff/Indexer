@@ -4,3 +4,12 @@
 #idx tr.folder td {
 	background-color:#FAF9D2;
 }
+#idx tbody td .path {
+	padding-left: 20px;
+	font-size: 70%;
+	color: #aaa;
+	line-height: 60%;
+}
+#idx tbody td span.highlight {
+	color: #b40000;
+}

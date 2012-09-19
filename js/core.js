@@ -30,23 +30,46 @@
 					self.reset();
 				});
 
+				$('#btn-search').click(function() {
+					var str = self.searchInput.val();
+					self.search(str);
+				});
+
 				self.table.stupidtable();
 			},
 			search: function(str) {
-				if($('input[name=search-subfolder]').is(':checked') == true) {
-					window.location.href = 'index.php?search=' + str;
+				if($('input[name=deep]').is(':checked') == true) {
+					window.location.href = 'index.php?search=' + str + '&deep=1';
 				}
 				else {
 					$('tbody tr', this.table).hide();
 					$('tbody td:first-child:icontains('+str+')', this.table).parent().show();
 					$('#btn-search i').removeClass().addClass('icon-repeat');
+					this.highlight(str);
 				}
 			},
 			reset: function() {
 				var self = this;
 				$('tbody tr', self.table).show();
 				self.searchInput.val('');
-			}
+				self.resetHighlight();
+			},
+			resetHighlight: function() {
+				if($('span.highlight').length > 0) {
+					$('span.highlight').replaceWith($('span.highlight').html());
+				}
+			},
+			highlight: function (str)
+			{
+				this.resetHighlight();
+				
+				$('#idx a:icontains(' + str + ')').each(function() {
+					var reg = new RegExp('('+str+')', 'i');
+					$(this).html(
+						$(this).html().replace(reg, '<span class="highlight">$1</span>')
+					);
+				});
+			}			
 		};
 	}());
 	
