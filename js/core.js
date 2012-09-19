@@ -10,11 +10,24 @@
 				var self = this;
 				self.searchInput = $('#search');
 				self.table = $("#idx");
+				
+				self.searchInput.keydown(function (e) {
+					if(e.ctrlKey == true && e.which == 83) {
+						e.preventDefault();
+						if($('input[name=deep]').is(':checked') == false) {
+							$('input[name=deep]').prop('checked','checked');
+						}
+						else {
+							$('input[name=deep]').removeProp('checked');
+						}
+					}
+				});
 
 				self.searchInput.keypress(function(e) {
+					var str = $(this).val();
+					
 					if(e.which == 13) 
 					{
-						var str = $(this).val();
 						if(str == '')
 						{
 							self.reset();
@@ -34,7 +47,8 @@
 					var str = self.searchInput.val();
 					self.search(str);
 				});
-
+				
+				self.searchInput.focus();
 				self.table.stupidtable();
 			},
 			search: function(str) {
@@ -43,15 +57,20 @@
 				}
 				else {
 					$('tbody tr', this.table).hide();
-					$('tbody td:first-child:icontains('+str+')', this.table).parent().show();
+					$('tbody td:first-child a:icontains('+str+')', this.table).parents('tr').show();
 					this.highlight(str);
 				}
 			},
 			reset: function() {
-				var self = this;
-				$('tbody tr', self.table).show();
-				self.searchInput.val('');
-				self.resetHighlight();
+				if(window.location.search != '') {
+					window.location.href = '/';
+				}
+				else {
+					var self = this;
+					$('tbody tr', self.table).show();
+					self.searchInput.val('');
+					self.resetHighlight();
+				}
 			},
 			resetHighlight: function() {
 				if($('span.highlight').length > 0) {

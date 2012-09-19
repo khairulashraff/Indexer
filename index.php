@@ -35,7 +35,7 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 						<button class="btn" type="button" id="btn-reset" title="Reset"><i class="icon-repeat"></i></button>
 					</div>
 					<label class="checkbox">
-						<input type="checkbox" name="deep"<?php if($deep != false) echo ' checked="checked"' ?>> Search subfolder
+						<input type="checkbox" name="deep"<?php if($deep != false) echo ' checked="checked"' ?>> Search subfolder <small>(ctrl+s to toggle)</small>
 					</label>
 				</div>
 		</div>
