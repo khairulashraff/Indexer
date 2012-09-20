@@ -68,15 +68,10 @@
 				}
 			},
 			reset: function() {
-				if(window.location.search != '') {
-					window.location.href = baseurl;
-				}
-				else {
-					var self = this;
-					$('tbody tr', self.table).show();
-					self.searchInput.val('');
-					self.resetHighlight();
-				}
+				var self = this;
+				$('tbody tr', self.table).show();
+				self.searchInput.val('').focus();
+				self.resetHighlight();
 			},
 			resetHighlight: function() {
 				if($('span.highlight').length > 0) {
