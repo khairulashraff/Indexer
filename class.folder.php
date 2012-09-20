@@ -1,6 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__) . '/class.config.php');
+include_once(dirname(__FILE__) . '/class.encrypt.php');
 
 class Folder {
 	
@@ -70,7 +71,8 @@ class Folder {
 		Config::load();
 		
 		$root		= Config::get('root');
-		$dir		= isset($_GET['dir']) ? $_GET['dir'] : '';
+		$key		= Config::get('key');
+		$dir		= isset($_GET['dir']) ? Encrypt::decode($_GET['dir'], $key) : '';
 		
 		if(strstr($dir,'..'))
 		{	
@@ -98,10 +100,11 @@ class Folder {
 		$dirs	= $files = array();
 		$ignore	= Config::get('ignore');
 		$root	= Config::get('root');
-		$dir	= isset($_GET['dir']) ? $_GET['dir'] : '';
+		$key	= Config::get('key');
+		$dir	= isset($_GET['dir']) ? Encrypt::decode($_GET['dir'], $key) : '';
 		$search	= isset($_GET['search']) ? $_GET['search'] : false;
 		$deep	= isset($_GET['deep']) ? (boolean) $_GET['deep'] : false;
-		$path	= rtrim($root . '/' . $openDir, '/') . '/';
+		$path	= rtrim($root . DS . $openDir, DS) . DS;
 		
 		if(!is_dir($path) || ($h=opendir($path)) == false)
 		{
@@ -120,26 +123,28 @@ class Folder {
 			if(is_dir($path . $f))
 			{
 				$dirs[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
-							'name'	=>$f,
-							'date'	=>filemtime($path . $f),
-							'url'	=>'index.php?dir='.rawurlencode(trim($openDir . '/' . $f,'/')),
+							'name'	=> $f,
+							'date'	=> filemtime($path . $f),
+							'url'	=> Config::get('baseurl') . (Config::get('mask_url') ? 'dir/' : 'index.php?dir=') . Encrypt::encode(trim($openDir . "/" . $f, "/"), $key),
 							'path'	=> $openDir
 						);
 				
 				if($deep == true) {
-					$folder	= $this->openDir($openDir . '/' . $f);
+					$folder	= $this->openDir($openDir . DS . $f);
 					$dirs	+= $folder['dirs'];
 					$files	+= $folder['files'];
 				}
 			}
 			else
 			{
-				$size = filesize($path . $f);
+				$size		= filesize($path . $f);
+				$url		= trim($openDir . DS . rawurlencode($f), DS);
+				$encrypted	= (Config::get('mask_url') ? "get/" : "get.php?file=" ) . Encrypt::encode($url, $key);
 				$files[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
 																'name'	=> $f,
 																'size'	=> $size,
 																'date'	=> filemtime($path . $f),
-																'url'	=> trim($openDir . "/" . rawurlencode($f), '/'),
+																'url'	=> Config::get('baseurl') . (Config::get('mask_url') ? $encrypted : $url),
 																'icon'	=> $this->getIcon($f),
 																'path'	=> $openDir
 															);
@@ -197,7 +202,8 @@ class Folder {
 	 * @return  String
 	 */
 	public function getUpURL() {
-		$url = ($this->up_dir != '' && $this->up_dir != '.') ? 'index.php?dir=' . rawurlencode($this->up_dir) : 'index.php';
+		$url = Config::get('baseurl') . (Config::get('mask_url') ? 'dir/' : 'index.php?dir=') . Encrypt::encode(trim($this->up_dir), Config::get('key'));
+		$url = ($this->up_dir != '' && $this->up_dir != '.') ? $url : Config::get('baseurl');
 		
 		return $url;
 	}

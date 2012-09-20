@@ -9,20 +9,20 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 <meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
 <title><?php echo Config::get('sitename') ?></title>
 
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome-ie7.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="<?php echo Config::get('baseurl') ?>css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo Config::get('baseurl') ?>css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="<?php echo Config::get('baseurl') ?>css/font-awesome-ie7.css">
+<link rel="stylesheet" type="text/css" href="<?php echo Config::get('baseurl') ?>css/style.css">
 
 <script type="text/javascript">
 	var baseurl = '<?php echo Config::get('baseurl') ?>';
 </script>
-<script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
-<script type="text/javascript" src="js/jquery-icontains.js"></script>
-<script type="text/javascript" src="js/jquery-querystring.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/stupidtable.min.js"></script>
-<script type="text/javascript" src="js/core.js"></script>
+<script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/jquery-icontains.js"></script>
+<script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/jquery-querystring.js"></script>
+<script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/stupidtable.min.js"></script>
+<script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/core.js"></script>
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">
