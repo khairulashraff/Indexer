@@ -2,6 +2,8 @@
 
 include_once(dirname(__FILE__) . '/class.config.php');
 include_once(dirname(__FILE__) . '/class.encrypt.php');
+include_once(dirname(__FILE__) . '/class.file.php');
+include_once(dirname(__FILE__) . '/class.route.php');
 
 class Folder {
 	
@@ -67,12 +69,9 @@ class Folder {
 	 * @return  void
 	 */
 	public function __construct() {
-		// load configs
-		Config::load();
-		
-		$root		= Config::get('root');
-		$key		= Config::get('key');
-		$dir		= isset($_GET['dir']) ? Encrypt::decode($_GET['dir'], $key) : '';
+		$root	= Config::get('root');
+		$key	= Config::get('key');
+		$dir	= Route::get('dir') ? Encrypt::decode(Route::get('dir'), $key) : '';
 		
 		if(strstr($dir,'..'))
 		{	
@@ -101,9 +100,9 @@ class Folder {
 		$ignore	= Config::get('ignore');
 		$root	= Config::get('root');
 		$key	= Config::get('key');
-		$dir	= isset($_GET['dir']) ? Encrypt::decode($_GET['dir'], $key) : '';
-		$search	= isset($_GET['search']) ? $_GET['search'] : false;
-		$deep	= isset($_GET['deep']) ? (boolean) $_GET['deep'] : false;
+		$dir	= Route::get('dir') ? Encrypt::decode(Route::get('dir'), $key) : '';
+		$search	= Route::get('search') ? Route::get('search') : false;
+		$deep	= Route::get('deep') ? (boolean) Route::get('deep') : false;
 		$path	= rtrim($root . DS . $openDir, DS) . DS;
 		
 		if(!is_dir($path) || ($h=opendir($path)) == false)
@@ -125,7 +124,7 @@ class Folder {
 				$dirs[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
 							'name'	=> $f,
 							'date'	=> filemtime($path . $f),
-							'url'	=> Config::get('baseurl') . (Config::get('mask_url') ? 'dir/' : 'index.php?dir=') . Encrypt::encode(trim($openDir . "/" . $f, "/"), $key),
+							'url'	=> Config::get('baseurl') . (Config::get('rewrite') ? '' : 'index.php/') . 'dir/'. Encrypt::encode(trim($openDir . "/" . $f, "/"), $key),
 							'path'	=> $openDir
 						);
 				
@@ -138,8 +137,8 @@ class Folder {
 			else
 			{
 				$size		= filesize($path . $f);
-				$url		= trim($openDir . DS . rawurlencode($f), DS);
-				$encrypted	= (Config::get('mask_url') ? "get/" : "get.php?file=" ) . Encrypt::encode($url, $key);
+				$url		= trim($openDir . '/' . rawurlencode($f), '/');
+				$encrypted	= (Config::get('rewrite') ? '' : 'index.php/') . "get/" . Encrypt::encode($url, $key);
 				$files[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
 																'name'	=> $f,
 																'size'	=> $size,
@@ -202,7 +201,7 @@ class Folder {
 	 * @return  String
 	 */
 	public function getUpURL() {
-		$url = Config::get('baseurl') . (Config::get('mask_url') ? 'dir/' : 'index.php?dir=') . Encrypt::encode(trim($this->up_dir), Config::get('key'));
+		$url = Config::get('baseurl') . (Config::get('rewrite') ? '' : 'index.php/') . 'dir/' . Encrypt::encode(trim($this->up_dir), Config::get('key'));
 		$url = ($this->up_dir != '' && $this->up_dir != '.') ? $url : Config::get('baseurl');
 		
 		return $url;

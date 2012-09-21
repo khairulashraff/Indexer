@@ -57,9 +57,17 @@
 			},
 			search: function(str) {
 				if($('input[name=deep]').is(':checked') == true) {
-					var qs = $.querystring();
-					var dir = qs.dir == undefined ? '' : '&dir=' + qs.dir;
-					window.location.href = baseurl + 'index.php?search=' + str + '&deep=1' + dir;
+					var url = window.location.pathname;
+					var matches = url.split('/');
+					var dir;
+					if(matches[1] != undefined && matches[1] == 'dir') {
+						dir = 'dir/' + matches[2] + '?';
+					}
+					else {
+						var qs = $.querystring();
+						dir = qs.dir == undefined ? ''	: 'index.php?dir=' + qs.dir + '&';
+					}
+					window.location.href = baseurl + dir + 'search=' + str + '&deep=1';
 				}
 				else {
 					$('tbody tr', this.table).hide();

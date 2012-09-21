@@ -41,3 +41,5 @@ class Config {
 		return false;
 	}
 }
+
+Config::load();
