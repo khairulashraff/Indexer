@@ -64,8 +64,7 @@
 						dir = 'dir/' + matches[2] + '?';
 					}
 					else {
-						var qs = $.querystring();
-						dir = qs.dir == undefined ? ''	: 'index.php?dir=' + qs.dir + '&';
+						dir = window.location.pathname == '/index.php' ? 'index.php?dir=' + qs.dir + '&' : '?';
 					}
 					window.location.href = baseurl + dir + 'search=' + str + '&deep=1';
 				}

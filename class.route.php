@@ -28,13 +28,13 @@ class Route {
 			return;
 		}
 		
-		if($exploded[$key-1] == 'get') {
+		if(isset($exploded[$key-1]) && $exploded[$key-1] == 'get') {
 			File::send($exploded[$key]);
 		}
 		
 		$segments['dir']	= isset($exploded[$key]) ? $exploded[$key++] : null;
-		$segments['search'] = isset($exploded[$key]) ? $exploded[$key++] : null;
-		$segments['deep']	= isset($exploded[$key]) ? $exploded[$key++] : null;
+		$segments['search'] = isset($_GET['search']) ? $_GET['search'] : null;
+		$segments['deep']	= isset($_GET['deep']) ? $_GET['deep'] : null;
 		
 		static::$segments = $segments;
 	}
