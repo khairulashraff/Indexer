@@ -124,12 +124,12 @@ class Folder {
 				$dirs[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
 							'name'	=> $f,
 							'date'	=> filemtime($path . $f),
-							'url'	=> Config::get('baseurl') . (Config::get('rewrite') ? '' : 'index.php/') . 'dir/'. Encrypt::encode(trim($openDir . "/" . $f, "/"), $key),
+							'url'	=> $this->makeUrl($openDir . "/" . $f, 'dir'),
 							'path'	=> $openDir
 						);
 				
 				if($deep == true) {
-					$folder	= $this->openDir($openDir . DS . $f);
+					$folder	= $this->openDir($openDir . "/" . $f);
 					$dirs	+= $folder['dirs'];
 					$files	+= $folder['files'];
 				}
@@ -172,6 +172,17 @@ class Folder {
 		closedir($h);
 		
 		return array('dirs' => $dirs, 'files' => $files);
+	}
+
+	/*
+	* Generate valid URL path
+	* 
+	* @access  public
+	* @param  string  $path  Non-absolute path of folder
+	* @return  string  URL of requested folder
+	*/
+	public function makeUrl($path, $type) {
+		return Config::get('baseurl') . $type . "/" . (Config::get('rewrite') ? '' : 'index.php/') . Encrypt::encode(trim($path, "/"), Config::get('key'));
 	}
 	
 	/*
@@ -233,9 +244,18 @@ class Folder {
 	 * @return  Array
 	 */
 	public function getTrails() {
-		$trails = explode("/", $this->current);
+		$trails = array_filter(explode("/", $this->current));
+		$last 	= "";
+		$breads = array();
+		foreach($trails AS $trail) {
+			$breads[] = array(
+						'name' => $trail,
+						'path' => $this->makeUrl(trim($last . "/" . $trail, "/"), 'dir'),
+					);
+			$last .= "/" . $trail;
+		}
 		
-		return $trails;
+		return $breads;
 	}
 
 

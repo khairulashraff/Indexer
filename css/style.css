@@ -17,3 +17,30 @@ div#footer {
 	font-size: 70%;
 	text-align: center;
 }
+div.breadcrumb {
+	padding: 0;
+	margin: 0;
+}
+div.breadcrumb .home {
+	margin-top: 5px;
+}
+div.breadcrumb .home > a {
+	padding: 5px;
+}
+div.breadcrumb .breads {
+	margin-left: 5px;
+}
+div.breadcrumb ul {
+	margin: 0;
+}
+div.breadcrumb ul li {
+	float: left;
+	padding: 5px 0;
+}
+div.breadcrumb ul li.first {
+	padding: 5px 10px;
+}
+div.breadcrumb ul li.last {
+	padding: 5px 15px 5px 5px;
+	font-weight: bold;
+}

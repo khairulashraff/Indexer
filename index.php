@@ -1,4 +1,4 @@
-<?php // START PHP
+	<?php // START PHP
 include_once(dirname(__FILE__) . '/class.folder.php');
 $folder = new Folder();
 $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
@@ -27,12 +27,12 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 </head>
 <body>
 	<div class="container" style="padding-top: 30px;">
-		<h3><?php echo $folder->name == '' ? Config::get('sitename') : $folder->name ?></h3>
-		<div class="pull-left">
-			<p><?php echo $folder->count; ?> objects in this folder, <?php echo Folder::format($folder->size) ?> total.</p>
-			<?php if($folder->current) { ?><p><i class="icon-chevron-left"></i> &nbsp;<a href="<?php echo $folder->getUpUrl() ?>">Back</a></p><?php } ?>
-		</div>
-		<div class="pull-right">
+		<div class="clearfix">
+			<h3><?php echo $folder->name == '' ? Config::get('sitename') : $folder->name ?></h3>
+			<div class="pull-left">
+				<p><?php echo $folder->count; ?> objects in this folder, <?php echo Folder::format($folder->size) ?> total.</p>
+			</div>
+			<div class="pull-right">
 				<div class="input-prepend input-append">
 					<div>
 						Search: <input type="text" name="search" id="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : '' ?>">
@@ -43,6 +43,26 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 						<input type="checkbox" name="deep"<?php if($deep != false) echo ' checked="checked"' ?>> Search subfolder <small>(ctrl+s to toggle)</small>
 					</label>
 				</div>
+			</div>
+		</div>
+		<div class="pull-left">
+			<div class="breadcrumb">
+				<div class="row">
+					<div class="span1 home">
+						<a href="<?php echo Config::get('baseurl') ?>"<i class="icon-home"></i></a> <i class="icon-chevron-right"></i>
+					</div>
+					<div class="span23 breads">
+						<ul class="clearfix">
+							<?php $trails = $folder->getTrails(); foreach($trails AS $key=>$row) { ?>
+							<?php if(isset($trails[$key+1])) { ?>
+								<li><a href="<?php echo $row['path'] ?>"><?php echo $row['name'] ?></a><i class="icon-chevron-right"></i></li>
+							<?php } else { ?> 
+								<li class="last"><?php echo $row['name'] ?></li>
+							<?php } } ?>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 		<table class='table table-striped' id="idx">
 			<thead>
