@@ -122,9 +122,25 @@
 
 					var img = new Image();
 					img.onload = function() {
-						var left = $(window).width()/2 - this.width/2;
-						var top = $(window).height()/2 - this.height/2;
-						self.modal.css({'width' : this.width, 'left' : left, 'top': top});
+						var windowW = $(window).width();
+						var windowH = $(window).height();
+						var width =  this.width > windowW ? windowW : this.width;
+						var height = this.height*(width/this.width);
+						var css = {};
+
+						if(height > windowH) {
+							css.height = windowH - 100;
+							css.width = this.width*(css.height/this.height);
+							css.top = windowH/2 - css.height/2 + 'px';
+							css.left =  windowW/2 - css.width/2 + 'px';
+						}
+						else {
+							css.width = width;
+							css.top = windowH/2 - height/2 + 'px';
+							css.left =  windowW/2 - css.width/2 + 'px';
+						}
+						self.modal.css(css);
+
 						$('img', self.modal).tooltip()
 					}
 					img.src = imgSrc;

@@ -1,5 +1,6 @@
 #idx th.sortable, #image-preview img {
 	cursor:pointer;
+	max-height: 100%;
 }
 #idx tr.folder td {
 	background-color:#FAF9D2;
