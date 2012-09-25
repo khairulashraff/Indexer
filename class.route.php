@@ -1,4 +1,4 @@
-	<?php
+<?php
 class Route {
 	
 	/*
@@ -24,15 +24,14 @@ class Route {
 			$key++;
 		}
 
-		if(empty($exploded)) {
-			return;
+		if(!empty($exploded)) {
+			if(isset($exploded[$key-1]) && $exploded[$key-1] == 'get') {
+				File::send($exploded[$key]);
+			}
+			$segments['dir']	= isset($exploded[$key]) ? $exploded[$key++] : null;
 		}
 		
-		if(isset($exploded[$key-1]) && $exploded[$key-1] == 'get') {
-			File::send($exploded[$key]);
-		}
-		
-		$segments['dir']	= isset($exploded[$key]) ? $exploded[$key++] : null;
+		// search and deep uses normal querystring
 		$segments['search'] = isset($_GET['search']) ? $_GET['search'] : null;
 		$segments['deep']	= isset($_GET['deep']) ? $_GET['deep'] : null;
 		
@@ -47,8 +46,8 @@ class Route {
 	 * @param   Int  Route segment. Optional.
 	 * @return  Mixed  Return all routes or false if non found
 	 */
-	public static function get($segment = null) {
-		if(!is_null($segment) && static::$segments[$segment]) {
+	public static function get($segment = null) {		
+		if(!is_null($segment) && isset(static::$segments[$segment])) {
 			return static::$segments[$segment];
 		}
 		
