@@ -182,7 +182,7 @@ class Folder {
 	* @return  string  URL of requested folder
 	*/
 	public function makeUrl($path, $type) {
-		return Config::get('baseurl') . $type . "/" . (Config::get('rewrite') ? '' : 'index.php/') . Encrypt::encode(trim($path, "/"), Config::get('key'));
+		return Config::get('baseurl') . (Config::get('rewrite') ? '' : 'index.php/') .  $type . "/" . Encrypt::encode(trim($path, "/"), Config::get('key'));
 	}
 	
 	/*
