@@ -1,4 +1,4 @@
-<?php
+	<?php
 class Route {
 	
 	/*
@@ -17,9 +17,9 @@ class Route {
 	 * @return  void
 	 */
 	public static function init() {
-		$exploded = array_values(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
+		$exploded = array_values(array_filter(explode('/', $_SERVER['PATH_INFO'])));
 		
-		$key = 1; // start
+		$key = 0; // start
 		if(Config::get('rewrite') == false) {
 			$key++;
 		}
