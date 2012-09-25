@@ -63,12 +63,12 @@
 					var dirkey = 1;
 
 					if(rewrite == 0) {
-						dir += 'index.php/';
+						dir += 'index.php';
 						dirkey++;
 					}
 
 					if(matches[dirkey] != undefined && matches[dirkey-1] == 'dir') {
-						dir += 'dir/' + matches[dirkey] + '/';
+						dir += '/dir/' + matches[dirkey] + '/';
 					}
 
 					window.location.href = dir + '?search=' + str + '&deep=1';
