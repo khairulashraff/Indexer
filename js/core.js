@@ -57,10 +57,10 @@
 			},
 			search: function(str) {
 				if($('input[name=deep]').is(':checked') == true) {
-					var url = window.location.pathname;
+					var url = window.location.href.replace(baseurl, '');
 					var matches = url.split('/');
 					var dir = baseurl;
-					var dirkey = 2;
+					var dirkey = 1;
 
 					if(rewrite == 0) {
 						dir += 'index.php/';

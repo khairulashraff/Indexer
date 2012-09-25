@@ -17,7 +17,7 @@ class Route {
 	 * @return  void
 	 */
 	public static function init() {
-		$exploded = array_values(array_filter(explode('/', $_SERVER['PATH_INFO'])));
+		$exploded = array_values(array_filter(explode('/', @$_SERVER['PATH_INFO'])));
 		
 		$key = 0; // start
 		if(Config::get('rewrite') == false) {
