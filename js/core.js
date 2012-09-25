@@ -59,14 +59,19 @@
 				if($('input[name=deep]').is(':checked') == true) {
 					var url = window.location.pathname;
 					var matches = url.split('/');
-					var dir;
-					if(matches[1] != undefined && matches[1] == 'dir') {
-						dir = 'dir/' + matches[2] + '?';
+					var dir = baseurl;
+					var dirkey = 2;
+
+					if(rewrite == 0) {
+						dir += 'index.php/';
+						dirkey++;
 					}
-					else {
-						dir = window.location.pathname == '/index.php' ? 'index.php?dir=' + qs.dir + '&' : '?';
+
+					if(matches[dirkey] != undefined && matches[dirkey-1] == 'dir') {
+						dir += 'dir/' + matches[dirkey] + '/';
 					}
-					window.location.href = baseurl + dir + 'search=' + str + '&deep=1';
+
+					window.location.href = dir + '?search=' + str + '&deep=1';
 				}
 				else {
 					$('tbody tr', this.table).hide();

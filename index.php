@@ -16,6 +16,7 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 
 <script type="text/javascript">
 	var baseurl = '<?php echo Config::get('baseurl') ?>';
+	var rewrite = <?php echo (int) Config::get('rewrite') ?>;
 </script>
 <script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="<?php echo Config::get('baseurl') ?>js/jquery-icontains.js"></script>
