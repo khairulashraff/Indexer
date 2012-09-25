@@ -28,7 +28,7 @@ $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 <body>
 	<div class="container" style="padding-top: 30px;">
 		<div class="clearfix">
-			<h3><?php echo $folder->name == '' ? Config::get('sitename') : $folder->name ?></h3>
+			<h3><?php echo Config::get('sitename') ?></h3>
 			<div class="pull-left">
 				<p><?php echo $folder->count; ?> objects in this folder, <?php echo Folder::format($folder->size) ?> total.</p>
 			</div>
