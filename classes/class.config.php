@@ -19,7 +19,7 @@ class Config {
 	 * @return  void
 	 */
 	public static function load($file = null) {
-		$path = dirname(__FILE__) . '/' . ($file ? $file : 'config.php');
+		$path = dirname(dirname(__FILE__)) . '/' . ($file ? $file : 'config.php');
 		if(file_exists($path)) {
 			static::$configs = include_once($path);
 		}
@@ -43,3 +43,8 @@ class Config {
 }
 
 Config::load();
+
+include_once(dirname(__FILE__) . '/class.folder.php');
+include_once(dirname(__FILE__) . '/class.encrypt.php');
+include_once(dirname(__FILE__) . '/class.file.php');
+include_once(dirname(__FILE__) . '/class.route.php');

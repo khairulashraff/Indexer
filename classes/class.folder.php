@@ -1,10 +1,5 @@
 <?php
 
-include_once(dirname(__FILE__) . '/class.config.php');
-include_once(dirname(__FILE__) . '/class.encrypt.php');
-include_once(dirname(__FILE__) . '/class.file.php');
-include_once(dirname(__FILE__) . '/class.route.php');
-
 class Folder {
 	
 	/*
@@ -72,6 +67,7 @@ class Folder {
 		$root	= Config::get('root');
 		$key	= Config::get('key');
 		$dir	= Route::get('dir') ? Encrypt::decode(Route::get('dir'), $key) : '';
+		
 		
 		if(strstr($dir,'..'))
 		{	

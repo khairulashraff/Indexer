@@ -1,5 +1,5 @@
 	<?php // START PHP
-include_once(dirname(__FILE__) . '/class.folder.php');
+include_once(dirname(__FILE__) . '/classes/class.config.php');
 $folder = new Folder();
 $deep	= isset($_GET['deep']) ? $_GET['deep'] : false;
 // END PHP ?>
