@@ -33,7 +33,7 @@ class Config {
 	 * @param  String  $key  Configuration key
 	 * @return  String  Configuration value
 	 */
-	public static function get($key) {
+	public static function get($key = null) {
 		if(isset(static::$configs[$key])) {
 			return static::$configs[$key];
 		}

@@ -65,9 +65,8 @@ class Folder {
 	 */
 	public function __construct() {
 		$root	= Config::get('root');
-		$key	= Config::get('key');
-		$dir	= Route::get('dir') ? Encrypt::decode(Route::get('dir'), $key) : '';
-		
+		$dir	= Route::get('dir') ? Encrypt::decode(Route::get('dir')) : '';
+
 		
 		if(strstr($dir,'..'))
 		{	
@@ -95,8 +94,7 @@ class Folder {
 		$dirs	= $files = array();
 		$ignore	= Config::get('ignore');
 		$root	= Config::get('root');
-		$key	= Config::get('key');
-		$dir	= Route::get('dir') ? Encrypt::decode(Route::get('dir'), $key) : '';
+		$dir	= Route::get('dir') ? Encrypt::decode(Route::get('dir')) : '';
 		$search	= Route::get('search') ? Route::get('search') : false;
 		$deep	= Route::get('deep') ? (boolean) Route::get('deep') : false;
 		$path	= rtrim($root . DS . $openDir, DS) . DS;
@@ -134,7 +132,7 @@ class Folder {
 			{
 				$size		= filesize($path . $f);
 				$url		= trim($openDir . '/' . rawurlencode($f), '/');
-				$encrypted	= (Config::get('rewrite') ? '' : 'index.php/') . "get/" . Encrypt::encode($url, $key);
+				$encrypted	= (Config::get('rewrite') ? '' : 'index.php/') . "get/" . Encrypt::encode($url);
 				$files[strtolower(preg_replace('/[.,_!-\s]/','', $f))] = array(
 																'name'	=> $f,
 																'size'	=> $size,
@@ -178,7 +176,7 @@ class Folder {
 	* @return  string  URL of requested folder
 	*/
 	public function makeUrl($path, $type) {
-		return Config::get('baseurl') . (Config::get('rewrite') ? '' : 'index.php/') .  $type . "/" . Encrypt::encode(trim($path, "/"), Config::get('key'));
+		return Config::get('baseurl') . (Config::get('rewrite') ? '' : 'index.php/') .  $type . "/" . Encrypt::encode(trim($path, "/"));
 	}
 	
 	/*
@@ -199,19 +197,6 @@ class Folder {
 	 */
 	public function getDirs() {
 		return $this->dirs;
-	}
-	
-	/*
-	 * Get URL of upper directory
-	 * 
-	 * @access  public
-	 * @return  String
-	 */
-	public function getUpURL() {
-		$url = Config::get('baseurl') . (Config::get('rewrite') ? '' : 'index.php/') . 'dir/' . Encrypt::encode(trim($this->up_dir), Config::get('key'));
-		$url = ($this->up_dir != '' && $this->up_dir != '.') ? $url : Config::get('baseurl');
-		
-		return $url;
 	}
 	
 	/*

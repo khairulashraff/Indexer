@@ -18,8 +18,11 @@ class Encrypt {
         return base64_decode($data);
     }
 
-    public static function encode($value, $key){ 
+    public static function encode($value, $key = null){ 
         if(!$value){return false;}
+        if(is_null($key)) {
+            $key = Config::get('key');
+        }
         $text = $value;
         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
         $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
@@ -27,8 +30,11 @@ class Encrypt {
         return trim(static::safe_b64encode($crypttext)); 
     }
 
-    public static function decode($value, $key){
+    public static function decode($value, $key = null){
         if(!$value){return false;}
+        if(is_null($key)) {
+            $key = Config::get('key');
+        }
         $crypttext = static::safe_b64decode($value); 
         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
         $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
